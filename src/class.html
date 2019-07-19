@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div class="static"
+        v-bind:class="{active:isActive, 'text-danger':hasError}"
+    ></div>
+    <div class="static"
+        v-bind:class="classObj"
+    ></div>
+    <!-- 等于<p class="foo bar baz boo">Hi</p> -->
+    <my-component class="baz boo"></my-component>
+</body>
+<script type="text/javascript">
+    new Vue({
+        data:{
+            active:true,
+            'text-danger':false
+        }
+    })
+
+    new Vue({
+        data:{
+            classObj:{
+                active:true,
+                'text-danger':false
+            }
+        }
+    })
+
+    Vue.component('my-component', {
+        template: '<p class="foo bar">Hi</p>'
+    })
+</script>
+</html>
