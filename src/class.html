@@ -16,6 +16,43 @@
     ></div>
     <!-- 等于<p class="foo bar baz boo">Hi</p> -->
     <my-component class="baz boo"></my-component>
+
+    <div id='appo'>
+        <input type="checkbox" id="checkbox" v-model="checked">
+        <!-- for="checkbox"有没有好像都没影响 -->
+        <label for="checkbox">{{ checked }}</label>
+    </div>
+
+    <!-- 多个复选框的值绑定到一个数组 -->
+    <div id="exp">
+        <input type="checkbox" id="jack" value="Jack" v-model="checkboxs">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="john" value="John" v-model="checkboxs">
+        <label for="john">John</label>
+        <input type="checkbox" id="mike" value="Mike" v-model="checkboxs">
+        <label for="mike">Mike</label>
+        <br>
+        <span>Checked names: {{ checkboxs }}</span>
+    </div>
+
+    <div id="appi">
+        <select v-model="selected" multiple style="width:50px;">
+            <option >A</option>
+            <option >B</option>
+            <option >C</option>
+        </select>
+        <br>
+        <span>{{selected}}</span>
+    </div>
+
+    <div id="appu">
+        <select v-model="selected">
+            <option v-for="option in options" v-bind:value="option.value">
+                {{option.text}}
+            </option>
+        </select>
+        <span>{{selected}}</span>
+    </div>
 </body>
 <script type="text/javascript">
     new Vue({
@@ -36,6 +73,39 @@
 
     Vue.component('my-component', {
         template: '<p class="foo bar">Hi</p>'
+    })
+
+    new Vue({
+        el:'#appo',
+        data:{
+            checked:false
+        }
+    })
+
+    new Vue({
+        el:'#exp',
+        data:{
+            checkboxs:[]
+        }
+    })
+
+    new Vue({
+        el:'#appi',
+        data:{
+            selected:[]
+        }
+    })
+
+    new Vue({
+        el:'#appu',
+        data:{
+            selected:'A',
+            options:[
+            { text: 'One', value: 'A' },
+            { text: 'Two', value: 'B' },
+            { text: 'Three', value: 'C' }
+            ]
+        }
     })
 </script>
 </html>

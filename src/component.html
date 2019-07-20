@@ -23,6 +23,21 @@
             ></todo-item-2>
         </ol>
     </div>
+
+    <div id="app-button">
+        <button-com></button-com>
+    </div>
+
+    <div id='app-blog'>
+        <div :style="{fontSize:postFontSize + 'em'}">
+            <blog-post 
+            v-for="post in posts"
+            v-bind:key="post.id"
+            v-bind:post="post"
+            v-on:enlarge-text="postFontSize += 0.1"
+        ></blog-post>
+        </div>
+    </div>
 </body>
 <script type="text/javascript">
     //定义一个名为todo-item的组件
@@ -45,6 +60,49 @@
             { id: 0, text: '蔬菜' },
             { id: 1, text: '奶酪' },
             { id: 2, text: '随便其它什么人吃的东西' }
+            ]
+        }
+    })
+    //Vue.component是全局方式注册组件
+    Vue.component('button-com',{
+        //一个组件的data必须是一个函数，每个实例都能维护一个拷贝
+        data:function(){
+            return {count: 0}
+        },
+        template:'<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+
+    new Vue({
+        el:'#app-button'
+    })
+
+    //一个博客包含标题和内容等部分，这里把博客整体作为一个对象给props
+    //否则在props里要设置title属性content属性等，html组件标签中也要绑定
+    //v-bind:title,v-bind:content等等很麻烦
+    Vue.component('blog-post',{
+        props:['post'],
+        //可以定义属性设置一些样式
+        postFontSize:1,
+        //调用内建的 $emit 方法 并传入事件名称来触发一个事件
+        template: `
+            <div class="blog-post">
+                <h3>{{ post.title }}</h3>
+                <button v-on:click="$emit('enlarge-text')">
+                    Enlarge text
+                </button>
+                <div v-html="post.content"></div>
+            </div>
+        `
+    })
+
+    new Vue({
+        el:'#app-blog',
+        data:{
+            posts:[
+                {title:'23', content:'fsdfefew'},
+                {title:'24', content:'fsdfefew'},
+                {title:'25', content:'fsdfefew'},
+                {title:'26', content:'fsdfefew'},
             ]
         }
     })
